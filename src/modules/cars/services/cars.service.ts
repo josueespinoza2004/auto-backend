@@ -31,15 +31,15 @@ export class CarsService {
   //   });
   // }
 
-  findAll(params?: FilterCarDto) {
-    const { limit, offset, description } = params || {};
+  async findAll(params?: FilterCarDto) {
+    const { limit = 10, offset = 0, description } = params || {};
     const where: FindOptionsWhere<Car> = {};
 
     if (description) {
       where.description = ILike(`%${description}%`);
     }
 
-    return this.carRepository.find({
+    const [data, total] = await this.carRepository.findAndCount({
       order: { id: 'ASC' },
       where,
       take: limit,
@@ -48,6 +48,7 @@ export class CarsService {
         brand: true,
       },
     });
+    return { data, total };
   }
 
   async create(createCarDto: CreateCarDto, user: User) {
