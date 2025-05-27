@@ -21,13 +21,12 @@ export class CarsController {
 
   @Get()
   async getFindAll(@Query() params: FilterCarDto) {
-    // console.log(paginationDto);
-    const rows = await this.carsService.findAll(params);
-
-    const data = {
-      data: rows,
-    };
-    return data;
+    // console.log('Parámetros recibidos en el backend:', params);
+    if (params.limit) params.limit = Number(params.limit);
+    if (params.offset) params.offset = Number(params.offset);
+    console.log('Parámetros recibidos y convertidos:', params);
+    const { data, total } = await this.carsService.findAll(params);
+    return { data, total };
   }
 
   @Post()

@@ -59,13 +59,13 @@ export class UpdateCarDto extends PartialType(CreateCarDto) {}
 
 export class FilterCarDto {
   @IsOptional()
-  @IsPositive()
-  limit: number;
+  // @IsPositive()
+  limit?: number;
 
   @IsOptional()
-  @Min(0)
-  offset: number;
+  // @Min(0)
+  offset?: number;
 
   @IsOptional()
-  description: string;
+  description?: string;
 }
